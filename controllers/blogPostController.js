@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 const express = require('express');
-const { BlogPostModel } = require('../models');
+const { BlogPostModel, AdminModel } = require('../models');
 const HttpStatus = require('../HttpStatus');
 
 ///admin middleware

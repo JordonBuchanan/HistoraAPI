@@ -6,52 +6,24 @@ const HistoraPicksSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'admins'
     },
-    video:[
-        {
-            videoId:{
-                type: String,
-                required: true
-            },
-            title:{
-                type:String
-            },
-            thoughts:{
-                type: String,
-                required: true
-            }
-        }
-    ],
-    article:[
-        {
-            title:{
-                type: String
-            },
-            link:{
-                type: String,
-                required: true
-            },
-            thoughts:{
-                type: String,
-                required: true
-            }
-        }
-    ],
-    figure:[
-        {
-            title:{
-                type: String,
-                required: true
-            },
-            link:{
-                type: String,
-                required: true
-            },
-            thoughts:{
-                type: String,
-                required: true
-            }
-        }
-    ]
+    image:{
+        type: String,
+    },
+    title:{
+        type:String,
+        required: true
+    },
+    thoughts:{
+        type: String,
+        required: true
+    },
+    link:{
+        type: String,
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = HistoraPicks = mongoose.model('historapicks', HistoraPicksSchema);

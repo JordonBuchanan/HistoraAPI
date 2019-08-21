@@ -1,4 +1,4 @@
-const { HistoraPicksModel } = require('../models');
+const { HistoraPicksModel, AdminModel } = require('../models');
 const HttpStatus = require('../HttpStatus');
 const { validateToken } = require('../middleware/validateToken');
 
@@ -16,24 +16,27 @@ getHistoraPicksById = async(req, res) => {
 };
 
 createHistoraPicks = async(req, res) => {
-    const body = req.body;
-    if(!body){
-        return res.status(HttpStatus.badRequest).json({
-            success: false,
-            error: 'Histora Picks Must Be Provided',
+    AdminModel.findById(req.body.admin.admin._id).then(function(isAdmin){
+        if(!isAdmin){
+            return res.sendStatus(HttpStatus.unauthorized);
+        }
+        const body = req.body;
+        if(!body){
+            return res.status(HttpStatus.badRequest).json({
+                success: false,
+                error: 'Pick Must Be Provided',
+            });
+        }
+        const newHistoraPicks = HistoraPicksModel({
+            video: req.body.data.video,
+            article: req.body.data.article,
+            link: req.body.data.link,
+            admin:req.body.admin.admin._id
         });
-    }
-    if(historapicks.admin.toString() !== req.admin.id ){
-        return res.status(HttpStatus.unauthorized).json({ notauthorized: 'Admin not autherized'});
-    }
-    const newHistoraPicks = HistoraPicksModel({
-        video: req.body.video,
-        article: req.body.article,
-        link: req.body.link,
+        newHistoraPicks.save()
+            .then(historapicks => res.json(historapicks));
     });
-    newHistoraPicks.save()
-        .then(historapicks => res.json(historapicks));
-};
+}
  
  //Update Post Route
 updateHistoraPicks = async(req, res) => {

@@ -12,6 +12,10 @@ const FactSchema = new Schema({
     },
     source:{
         type: String
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 

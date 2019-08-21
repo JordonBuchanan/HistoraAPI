@@ -10,7 +10,7 @@ const AnnoucementSchema = new Schema({
         type:String,
         required: true
     },
-    text:{
+    body:{
         type: String,
         required: true
     },
@@ -20,6 +20,10 @@ const AnnoucementSchema = new Schema({
     },
     link:{
         type: String
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 

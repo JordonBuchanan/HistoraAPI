@@ -1,4 +1,4 @@
-const { FactModel } = require('../models');
+const { FactModel, AdminModel } = require('../models');
 const HttpStatus = require('../HttpStatus');
 const { validateToken } = require('../middleware/validateToken');
 
@@ -16,23 +16,26 @@ getFactById = async(req, res) => {
 };
 
 createFact = async(req, res) => {
-    const body = req.body;
-    if(!body){
-        return res.status(HttpStatus.badRequest).json({
-            success: false,
-            error: 'Video Must Be Provided',
+    AdminModel.findById(req.body.admin.admin._id).then(function(isAdmin){
+        if(!isAdmin){
+            return res.sendStatus(HttpStatus.unauthorized);
+        }
+        const body = req.body;
+        if(!body){
+            return res.status(HttpStatus.badRequest).json({
+                success: false,
+                error: 'Fact Must Be Provided',
+            });
+        }
+        const newFact = FactModel({
+            body: req.body.data.body,
+            source: req.body.data.source,
+            admin: req.body.admin.admin._id
         });
-    }
-    if(fact.admin.toString() !== req.admin.id ){
-        return res.status(HttpStatus.unauthorized).json({ notauthorized: 'Admin not autherized'});
-    }
-    const newFact = FactModel({
-        body: req.body.body,
-        source: req.body.source,
+        newFact.save()
+            .then(fact => res.json(fact));
     });
-    newFact.save()
-        .then(fact => res.json(fact));
-};
+}
 
 deleteFact = async(req, res) => {
     FactModel.findOne({ admin: req.admin.id })

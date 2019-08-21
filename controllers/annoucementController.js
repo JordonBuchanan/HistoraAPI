@@ -16,22 +16,27 @@ getAnnoucementById = async(req, res) => {
 };
 
 createAnnoucement = async(req, res) => {
-    const body = req.body;
-    if(!body){
-        return res.status(HttpStatus.badRequest).json({
-            success: false,
-            error: 'Annoucement Must Be Provided',
+    AdminModel.findById(req.body.admin.admin._id).then(function(isAdmin){
+        if(!isAdmin){
+            return res.sendStatus(HttpStatus.unauthorized);
+        }
+        const body = req.body;
+        if(!body){
+            return res.status(HttpStatus.badRequest).json({
+                success: false,
+                error: 'Annoucement Must Be Provided',
+            });
+        }
+        const newAnnoucement = AnnoucementModel({
+            body: req.body.data.body,
+            title: req.body.data.title,
+            image: req.body.data.image,
+            link: req.body.data.link,
+            admin:req.body.admin.admin._id
         });
-    }
-    if(annoucement.admin.toString() !== req.admin.id ){
-        return res.status(HttpStatus.unauthorized).json({ notauthorized: 'Admin not autherized'});
-    }
-    const newAnnoucement = FactModel({
-        body: req.body.body,
-        source: req.body.source,
+        newAnnoucement.save()
+            .then(annoucement => res.json(annoucement));
     });
-    newAnnoucement.save()
-        .then(fact => res.json(annoucement));
 };
 
 deleteAnnoucement = async(req, res) => {
