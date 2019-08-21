@@ -1,0 +1,100 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Histora API",
+      "description": "The official API of Histora",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "name": "Histora Team"
+      },
+      "license": {
+        "name": "MIT"
+      }
+    },
+    "host": "",
+    "basePath": "/api",
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/biography": {
+        "get": {
+          "description": "Returns all Histora Biographies",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "A list of Biographies.",
+              "schema": {
+                "type": "object",
+                "items": {
+                  "$ref": "#/definitions/Biographies"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/booksmedia": {
+        "get": {
+          "description": "Returns all Histora Books",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "A list of books.",
+              "schema": {
+                "type": "object",
+                "items": {
+                  "$ref": "#/definitions/Books"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Biography": {
+        "type": "object",
+        "required": [
+          "name",
+          "image",
+          "description",
+          "deathDate",
+          "birthdate",
+          "title",
+          "nationality"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "nationality": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string"
+          },
+          "deathDate": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
