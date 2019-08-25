@@ -17,6 +17,10 @@ const HistoraPicksSchema = new Schema({
         type: String,
         required: true
     },
+    view:{
+        type: String,
+        required: true
+    },
     link:{
         type: String,
     },

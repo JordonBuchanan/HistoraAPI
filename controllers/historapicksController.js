@@ -28,8 +28,10 @@ createHistoraPicks = async(req, res) => {
             });
         }
         const newHistoraPicks = HistoraPicksModel({
-            video: req.body.data.video,
-            article: req.body.data.article,
+            image: req.body.data.image,
+            title: req.body.data.title,
+            thoughts: req.body.data.thoughts,
+            view: req.body.data.view,
             link: req.body.data.link,
             admin:req.body.admin.admin._id
         });
