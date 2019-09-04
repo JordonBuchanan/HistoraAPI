@@ -5,12 +5,14 @@ const HttpStatus = require('../HttpStatus');
 const { validateToken } = require('../middleware/validateToken');
 
 favorite = async(req, res, next) => {
-    var post = req.body.body;
-    
+  console.log(req.body.body._id)
+    var id = req.body.body._id;
     AdminModel.findById(req.body.admin.admin._id).then(function(user){
-      if (!user) { return res.sendStatus(HttpStatus.unauthorized); }
+      if (!user) { 
+        return res.sendStatus(HttpStatus.unauthorized); 
+      }
   
-      return user.favorite(post).then(function(post){
+      return user.favorite(id).then(function(post){
         return res.json({post: "Added"});
     }).catch(next);
   });

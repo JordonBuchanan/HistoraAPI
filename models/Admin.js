@@ -27,14 +27,18 @@ const Admin = new Schema(
             type: [String],
             required: true
         }, 
-        favorites:{
-            type:{ 
-                type: mongoose.Schema.Types.ObjectId, 
-                refPath: 'onModel' 
-            }
-        },
+        favorites:[{
+            type: mongoose.Schema.Types.ObjectId, 
+            refPath: 'onModel' 
+        }],
         onModel: {
             id:{
+                type: String
+            },
+            title:{
+                type: String
+            },
+            link:{
                 type: String
             },
             enum: ['booksmedias', 'videosmedias', 'podcastsmedias', 'papermedias']
@@ -65,6 +69,8 @@ Admin.pre('save', function(next){
 Admin.methods.favorite = function(id){
     if(this.favorites.indexOf(id) === -1){
       this.favorites.push(id);
+    } else {
+        console.log("duplicate")
     }
     return this.save();
   };

@@ -65,7 +65,7 @@ module.exports = {
                 })
             }
             bcrypt.compare(password, admin.password, function(err, result){
-                if(result === true){
+                if(result !== true){
                     const payload = { admin: admin._id }
                     const token = jwt.sign(payload, config.JWTSecret, {
                         expiresIn: EXPIRES_IN_MINUTES,
@@ -83,11 +83,15 @@ module.exports = {
                         error: 'Password does not match'
                     })
                 }
-            }).then(
-                populate({
-                  path: 'onModel',
-                  populate: { path: 'onModel' }
-                }))
-        })
+            })
+        }).then(AdminModel.find({ email }).populate('onModel').exec(function (err, favorites) {
+            console.log(favorites)
+            if(err){
+                return res
+                    .status(HttpStatus.badRequest)
+                    .json({ success: false, error: err })
+            }
+            return favorites
+          }));
     },
 }
