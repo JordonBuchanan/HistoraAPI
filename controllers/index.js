@@ -15,6 +15,7 @@ const booksMediaController = require('./booksMediaController');
 const videosMediaController = require('./videosMediaController');
 const podcastsMediaController = require('./podcastsMediaController');
 const biographyController = require('./biographyController');
+const askHostController = require('./askHostController');
 
 module.exports = {
     adminController,
@@ -33,5 +34,6 @@ module.exports = {
     podcastsMediaController,
     videosMediaController,
     paperMediaController,
-    biographyController
+    biographyController,
+    askHostController
 }

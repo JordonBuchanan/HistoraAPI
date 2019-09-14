@@ -91,6 +91,7 @@ app.use('/api', Routes.paperMediaRouter);
 app.use('/api', Routes.videosMediaRouter);
 app.use('/api', Routes.podcastsMediaRouter);
 app.use('/api', Routes.biographyRouter);
+app.use('/api', Routes.askHostRouter);
 
 app.listen(app.get('PORT'), () => 
     console.log(`Server running on port ${app.get('PORT')}`),

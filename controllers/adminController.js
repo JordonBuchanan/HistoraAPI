@@ -84,14 +84,6 @@ module.exports = {
                     })
                 }
             })
-        }).then(AdminModel.find({ email }).populate('onModel').exec(function (err, favorites) {
-            console.log(favorites)
-            if(err){
-                return res
-                    .status(HttpStatus.badRequest)
-                    .json({ success: false, error: err })
-            }
-            return favorites
-          }));
+        })
     },
 }

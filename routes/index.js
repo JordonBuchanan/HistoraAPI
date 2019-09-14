@@ -16,6 +16,7 @@ const podcastsMediaRouter = require('./podcastsMediaRouter');
 const videosMediaRouter = require('./videosMediaRouter');
 const paperMediaRouter = require('./paperMediaRouter');
 const biographyRouter = require('./biographyRouter');
+const askHostRouter = require('./askHostRouter');
 
 module.exports = {
     adminRouterProtected,
@@ -35,5 +36,6 @@ module.exports = {
     booksMediaRouter,
     paperMediaRouter,
     videosMediaRouter,
-    biographyRouter
+    biographyRouter,
+    askHostRouter
 }

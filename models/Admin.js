@@ -28,10 +28,6 @@ const Admin = new Schema(
             required: true
         }, 
         favorites:[{
-            type: mongoose.Schema.Types.ObjectId, 
-            refPath: 'onModel' 
-        }],
-        onModel: {
             id:{
                 type: String
             },
@@ -41,8 +37,7 @@ const Admin = new Schema(
             link:{
                 type: String
             },
-            enum: ['booksmedias', 'videosmedias', 'podcastsmedias', 'papermedias']
-        },
+        }],
     },
     {
         timestamps: true
@@ -66,9 +61,9 @@ Admin.pre('save', function(next){
     });
 });
 
-Admin.methods.favorite = function(id){
-    if(this.favorites.indexOf(id) === -1){
-      this.favorites.push(id);
+Admin.methods.favorite = function(payload){
+    if(this.favorites.indexOf(payload._id) === -1){
+      this.favorites.push(payload);
     } else {
         console.log("duplicate")
     }
