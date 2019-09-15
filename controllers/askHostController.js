@@ -2,35 +2,39 @@ const { UserModel } = require('../models');
 const { AdminModel } = require('../models');
 const HttpStatus = require('../HttpStatus');
 const nodemailer = require('nodemailer');
+const config = require('../config');
 
 askHost = async(req, res, next) => {
+    console.log(req.body)
     AdminModel.findById(req.body.admin.admin._id).then(function(user){
       if (!user) { 
         return res.sendStatus(HttpStatus.unauthorized); 
       }
       let payload = req.body.body;
       let sender = req.body.admin.admin.name;
-      let testAccount = nodemailer.createTestAccount();
       let transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        secure: false, // true for 465, false for other ports
+        service: 'gmail',
         auth: {
-            user: testAccount.user, // generated ethereal user
-            pass: testAccount.pass // generated ethereal password
+            type: 'OAuth2',
+            user: config.HISTORA_EMAIL,
+            clientId: config.CLIENT_ID,
+            clientSecret: config.CLIENT_SECRET,
+            refreshToken: config.REFRESH_TOKEN,
+            accessToken: config.ACCESS_TOKEN
         }
     });
 
     let info = transporter.sendMail({
         from: sender,
-        to: 'jordonbuchanan@outlook.com',
+        to: config.HOST_EMAIL,
         subject: 'New Question!',
         text: payload,
         html: '<b>' + payload + '</b>'
     });
 
-    console.log('Message sent: %s', info.messageId);
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    return res.status(HttpStatus.OK).json({
+      message: 'Sent!'
+  }) 
 
   }).catch(next);
 };
